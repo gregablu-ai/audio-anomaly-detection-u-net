@@ -45,6 +45,14 @@ Potential applications include:
 
 ---
 
+## Repository Notice
+
+This repository contains the academic documentation, methodology and experimental results of the project.
+
+The original implementation developed during the course is no longer available. The repository is intended to document the architecture, workflow and outcomes of the work.
+
+---
+
 ## Datasets
 
 The project combines public datasets containing speech and environmental sounds.
