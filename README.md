@@ -6,6 +6,27 @@ Developed as part of the **Artificial Intelligence and Machine Learning** course
 
 ---
 
+## Repository Notice
+
+This repository contains the academic documentation, methodology and experimental results of the project.
+
+The original source code developed during the course is no longer available. The repository is intended to document the architecture, workflow and outcomes of the work.
+
+---
+
+## Key Highlights
+
+- Custom U-Net architectures with BiLSTM integration
+- Non-supervised anomaly detection for human voice identification
+- Supervised audio source separation
+- PyTorch-based Deep Learning pipeline
+- Common Voice, ESC-50 and UrbanSound8K datasets
+- Audio preprocessing and augmentation
+- Whisper-based transcription evaluation
+- More than 10 million trainable parameters
+
+---
+
 ## Project Overview
 
 The project addresses two closely related tasks in real-world audio processing:
@@ -35,21 +56,13 @@ Human voice detection and separation are fundamental tasks in modern Artificial 
 
 Potential applications include:
 
-- Speech enhancement in noisy environments
-- Video conferencing systems
-- Automatic speech recognition pipelines
-- Environmental acoustic monitoring
+- Speech enhancement
+- Audio surveillance
 - Smart assistants
-- Public safety and emergency detection systems
-- Audio surveillance and monitoring
-
----
-
-## Repository Notice
-
-This repository contains the academic documentation, methodology and experimental results of the project.
-
-The original implementation developed during the course is no longer available. The repository is intended to document the architecture, workflow and outcomes of the work.
+- Environmental monitoring
+- Public safety systems
+- Emergency detection
+- Speech recognition pipelines
 
 ---
 
@@ -66,7 +79,7 @@ The project combines public datasets containing speech and environmental sounds.
 - ESC-50
 - UrbanSound8K
 
-Audio samples were filtered to obtain clips between 5 and 9 seconds in duration in order to ensure dataset consistency.
+Audio samples were filtered to obtain clips between 5 and 9 seconds in duration to ensure dataset consistency.
 
 ---
 
@@ -111,22 +124,13 @@ During inference:
 - Background sounds are considered normal patterns
 - Human speech is treated as an anomaly
 
-### Architecture
+### Anomaly Detection Architecture
 
-Custom 1D U-Net architecture featuring:
+![Anomaly Detector Architecture](figures/Anomaly-detector-u-net.png)
 
-- Encoder-Decoder structure
-- 5 hierarchical levels
-- Residual connections
-- Skip connections
-- BiLSTM temporal modeling
-- Dual output branches
+The anomaly detection model is based on a custom U-Net architecture enhanced with BiLSTM layers for temporal modeling.
 
-Total parameters:
-
-```text
-11,530,947
-```
+The network learns the acoustic structure of background sounds and identifies human speech as anomalous events through reconstruction quality analysis.
 
 ### Output
 
@@ -145,27 +149,19 @@ allowing anomaly localization and interpretation.
 
 Separate speech signals from environmental noise.
 
-### Architecture
+### Audio Separation Architecture
 
-Wave-U-Net inspired architecture composed of:
+![Audio Separation Architecture](figures/Audio-Separation-architecture%20U%20net.png)
 
-- Encoder
-- Bottleneck
-- Decoder
+The supervised source separation model follows a Wave-U-Net inspired architecture and reconstructs independent voice and background signals from a mixed audio recording.
+
+### Architecture Features
+
+- Encoder-Decoder structure
 - Skip Connections
-- BiLSTM layers
-
-Activation functions:
-
-- LeakyReLU
-- GELU
-- Tanh
-
-Total parameters:
-
-```text
-10,892,246
-```
+- Residual information flow
+- BiLSTM temporal modeling
+- Multi-level feature extraction
 
 ### Training Strategy
 
@@ -193,8 +189,8 @@ Main operations:
 - Mono conversion
 - Resampling to 16 kHz
 - Padding and truncation
-- Amplitude normalization
 - RMS normalization
+- Amplitude normalization
 - Data augmentation
 
 The preprocessing pipeline improves training stability and model robustness.
@@ -221,20 +217,13 @@ Advantages:
 
 - Better generalization
 - Reduced overfitting
-- Stable optimization process
+- Stable optimization
 
-### Monitoring
+### Training Workflow
 
-- Validation Loss
-- Checkpoint Saving
-- Reconstruction Quality
-- Logging Metrics
+![Training Loop](figures/Training-Loop.png)
 
-Best validation loss achieved:
-
-```text
-0.00021
-```
+The training pipeline includes preprocessing, mini-batch generation, optimization with AdamW, checkpoint management and validation monitoring.
 
 ---
 
@@ -252,9 +241,13 @@ The models were evaluated using:
 
 ## Experimental Results
 
-### Anomaly Detection
+### Training Performance
 
-Results obtained on unseen test samples:
+![Training vs Validation Loss](figures/TrainingVsValidation%20Loss.png)
+
+Training and validation losses show stable convergence and good generalization capabilities throughout the optimization process.
+
+### Anomaly Detection Results
 
 | Metric | Value |
 |----------|----------|
@@ -264,11 +257,9 @@ Results obtained on unseen test samples:
 | Minimum Error | 0.0000 |
 | Maximum Error | 0.1746 |
 
-The model demonstrated good generalization capability and stable anomaly detection performance.
+The anomaly detector demonstrated robust performance on unseen audio samples and successfully identified voice events embedded in environmental noise.
 
----
-
-### Audio Source Separation
+### Audio Source Separation Results
 
 | Metric | Event |
 |----------|----------|
@@ -284,28 +275,41 @@ The model demonstrated good generalization capability and stable anomaly detecti
 | MAE | 0.0170 |
 | MSE | 0.00162 |
 
-The model achieved effective voice reconstruction and satisfactory background separation.
+The source separation architecture achieved effective reconstruction of human speech while preserving environmental background information.
+
+---
+
+## Inference Pipeline
+
+![Inference Pipeline](figures/Inferenza-in-Anomaly-Detection.png)
+
+The inference workflow processes unseen audio recordings and evaluates reconstruction quality to identify anomalous voice events and generate alert signals.
 
 ---
 
 ## Whisper Evaluation
 
-The reconstructed speech signals were additionally evaluated using OpenAI Whisper.
+The reconstructed speech signals were further evaluated using OpenAI Whisper.
 
-The transcription quality demonstrated that the separated speech signals preserved the linguistic content with high accuracy, confirming the effectiveness of the source separation pipeline.
+The transcription quality confirmed that the separated speech preserved the original linguistic content with high accuracy, demonstrating the effectiveness of the source separation pipeline.
 
 ---
 
 ## Repository Contents
 
-This repository contains the academic documentation of the project, including:
-
-- Project presentation
-- Methodology description
-- Experimental results
-- Model architecture overview
-
-The original source code developed during the course is no longer available.
+```text
+.
+├── README.md
+├── docs/
+│   └── Audio_Anomaly_Detection_Presentation.pdf
+│
+└── figures/
+    ├── Anomaly-detector-u-net.png
+    ├── Audio-Separation-architecture U net.png
+    ├── Inferenza-in-Anomaly-Detection.png
+    ├── Training-Loop.png
+    └── TrainingVsValidation Loss.png
+```
 
 ---
 
